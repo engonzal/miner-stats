@@ -1,0 +1,6 @@
+click
+influxdb
+python-dateutil
+requests
+six
+urllib3
