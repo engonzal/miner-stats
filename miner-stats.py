@@ -74,11 +74,15 @@ def ewbf(api_data, host, influx_info):
 @click.option('--miner', '-m', help='app miner')
 def main(host, port, influxuser, influxpassword, influxhost, influxport, influxdatabase, miner):
   while True:
-    api_data = minerQuery(host, port, miner)
-    influx_info = dict({"influxhost": influxhost, "influxport": influxport, "influxuser": influxuser, "influxpassword": influxpassword, "influxdatabase": influxdatabase})
-    if miner.lower() in ('ewbf'):
-      message = ewbf(api_data, host, influx_info)
-    elif miner.lower() in ('optiminer'):
-      message = optiminer(api_data, host, influx_info)
+    try:
+      api_data = minerQuery(host, port, miner)
+      influx_info = dict({"influxhost": influxhost, "influxport": influxport, "influxuser": influxuser, "influxpassword": influxpassword, "influxdatabase": influxdatabase})
+      if miner.lower() in ('ewbf'):
+        message = ewbf(api_data, host, influx_info)
+      elif miner.lower() in ('optiminer'):
+        message = optiminer(api_data, host, influx_info)
+    except:
+      print("Warning: Unable to access host")
+      time.sleep(int(120))
     time.sleep(int(30))
 main()
